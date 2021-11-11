@@ -1,8 +1,15 @@
 var gas = require('../models/gas'); 
  
 // List of all gas 
-exports.gas_list = function(req, res) { 
-    res.send('NOT IMPLEMENTED: gas list'); 
+exports.gas_list = async function(req, res) { 
+    try{ 
+        thegas = await gas.find(); 
+        res.send(thegas); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
 }; 
  
 // for a specific gas. 
