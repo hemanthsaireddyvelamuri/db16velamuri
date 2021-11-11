@@ -3,7 +3,10 @@ var router = express.Router();
  
 // Require controller modules. 
 var api_controller = require('../controllers/api'); 
-var gas_controller = require('../controllers/gas'); 
+var gas_controller = require('../controllers/gas');
+const gas_controlers= require('../controllers/gas'); 
+
+router.get('/', gas_controlers.gas_view_all_Page );
  
 /// API ROUTE /// 
  

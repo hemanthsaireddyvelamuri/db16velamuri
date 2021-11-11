@@ -1,8 +1,11 @@
 extends layout
 
+
+
 block content
   h1= title
   p Welcome to #{title}
+  let items = results
   - var results = [{name:"Nitrogen", smell: "Odorless", weight: 14},{name:"Hydrogen", smell: "Odorless", weight: 1},{name:"Helium", smell: "Odorless", weight: 2}]
    div(class="container-fluid")
     div(class="row" )
