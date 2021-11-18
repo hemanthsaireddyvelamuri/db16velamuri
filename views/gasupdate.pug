@@ -1,0 +1,48 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  if (toShow == null) 
+    h2 No instance to delete 
+  else 
+    - let gasid = toShow._id 
+    - let gas_name = toShow.name   
+    - let smell = toShow.smell 
+    - let weight = toShow.weight  
+    - let actionid = "/resource/gas/" + gasid 
+    script let actionid = "#{actionid}"
+ 
+  div.row(class='mb-2') 
+    div.mr-1 ID is 
+    div #{gasid} 
+  - let actionid = "/resource/gas/" + gasid 
+  form(id='gasForm', action= actionid, method="PUT") 
+    div.form-group 
+        label.gasAttr(for='gas_name') gas name 
+        input#gas_name(type='text', name='gas_name', value= gas_name ) 
+    div.form-group 
+        label.gasAttr(for='smell') Smell 
+        input#smell(type='text', name='smell', value= smell ) 
+    div.form-group 
+        label.gasAttr(for='weight') weight
+        input#weight(type='number', name='weight', value= weight ) 
+    input(type="submit") 
+ 
+  script. 
+    document.forms['gasForm'].addEventListener('submit', (event) => { 
+      event.preventDefault(); 
+      // TODO do something here to show user that form is being submitted 
+      fetch(event.target.action, { 
+        method: 'PUT', 
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Update succeded") 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Update failed " + error ) 
+      }); 
+    });

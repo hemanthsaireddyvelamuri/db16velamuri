@@ -3,10 +3,16 @@ extends layout
 block content 
   h1= title 
  
-  - let gasid = toShow._id 
-  - let gas_name = toShow.name 
-  - let gassmell = toShow.smell 
-  - let gasweight = toShow.weight 
+  if (toShow == null) 
+    h2 No instance to delete 
+  else 
+    - let gasid = toShow._id 
+    - let gas_name = toShow.name   
+    - let smell = toShow.smell 
+    - let weight = toShow.weight  
+    - let actionid = "/resource/gas/" + gasid 
+    script let actionid = "#{actionid}"
+
   div 
     div.row 
       div(class='gasAttr mr-3') gas ID is: 
