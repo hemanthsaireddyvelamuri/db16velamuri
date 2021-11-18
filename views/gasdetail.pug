@@ -1,0 +1,22 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  - let gasid = toShow._id 
+  - let gas_name = toShow.name 
+  - let gassmell = toShow.smell 
+  - let gasweight = toShow.weight 
+  div 
+    div.row 
+      div(class='gasAttr mr-3') gas ID is: 
+      div #{ gasid } 
+    div.row 
+      div(class='gasAttr mr-3') gas name is: 
+      div #{ gas_name } 
+    div.row 
+      div(class='gasAttr mr-3') gas smell is: 
+      div #{ gassmell } 
+    div.row 
+      div(class='gasAttr mr-3') gas weight is: 
+      div #{ gasweight }
