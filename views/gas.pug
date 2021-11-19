@@ -1,20 +1,16 @@
 extends layout
 
-
-
 block content
-  h1= title
-  p Welcome to #{title}
-  let items = results
-  - var results = [{name:"Nitrogen", smell: "Odorless", weight: 14},{name:"Hydrogen", smell: "Odorless", weight: 1},{name:"Helium", smell: "Odorless", weight: 2}]
-   div(class="container-fluid")
-    div(class="row" )
-     each res,index in results
-      div(class="col-sm-4" onclick=`buy(${index})`) name : #{res.name} , smell : #{res.smell} , weight : #{res.weight}
-  script.
-   let itemNumber=0                
-        function buy(itemNumber)
-        {
-            //for index in results
-             alert(`you purchased Item ${itemNumber+1}`)
-        }
+ h1= title
+ - let gas = results;
+ div(class="container-fluid")
+  div(class="row m-1")
+   each item in gas
+      - let destination = `dispatch(\"/gas/update?id=${item._id}\")`
+      div(class="row-sm-2", class="m-1") Item #{item.gas_name}(#{item.smell}) is #{item.weight}
+      button.btn( class="btn-primary ml-1", onclick= destination) Update
+      
+ script.
+  function dispatch(path){
+    window.location.href=path
+  }

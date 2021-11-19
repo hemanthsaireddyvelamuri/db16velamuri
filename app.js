@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var passport = require('passport'); 
+var LocalStrategy = require('passport-local').Strategy; 
+
 const connectionString = 'mongodb+srv://hemanthvelamuri:Hemanth%4097@cluster0.zyjcx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
 mongoose = require('mongoose');
 mongoose.connect(connectionString,
@@ -63,6 +66,33 @@ async function recreateDB() {
 
 let reseed = true;
 if (reseed) { recreateDB(); }
+
+passport.use(new LocalStrategy( 
+  function(username, password, done) { 
+    Account.findOne({ username: username }, function (err, user) { 
+      if (err) { return done(err); } 
+      if (!user) { 
+        return done(null, false, { message: 'Incorrect username.' }); 
+      } 
+      if (!user.validPassword(password)) { 
+        return done(null, false, { message: 'Incorrect password.' }); 
+      } 
+      return done(null, user); 
+    }); 
+  } ))
+
+  app.use(require('express-session')({ 
+  secret: 'keyboard cat', 
+  resave: false, 
+  saveUninitialized: false 
+})); 
+var Account =require('./models/account'); 
+ 
+passport.use(new LocalStrategy(Account.authenticate())); 
+passport.serializeUser(Account.serializeUser()); 
+passport.deserializeUser(Account.deserializeUser()); 
+app.use(passport.initialize()); 
+app.use(passport.session()); 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
