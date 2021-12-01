@@ -15,12 +15,12 @@ router.get('/detail', gas_controlers.gas_view_one_Page);
 router.get('/', gas_controlers.gas_view_all_Page);
 
 /* GET create gas page */
-router.get('/create',secured, gas_controlers.gas_create_Page);
+router.get('/create', secured,gas_controlers.gas_create_Page);
 
 /* GET update gas page */ 
-router.get('/update',secured, gas_controlers.gas_update_Page);
+router.get('/update', secured,gas_controlers.gas_update_Page);
 
 /* GET create gas page */ 
-router.get('/delete',secured, gas_controlers.gas_delete_Page);  
+router.get('/delete', secured,gas_controlers.gas_delete_Page);  
 
 module.exports = router;
