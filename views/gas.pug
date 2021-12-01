@@ -1,16 +1,54 @@
-extends layout
-
-block content
- h1= title
- - let gas = results;
- div(class="container-fluid")
-  div(class="row m-1")
-   each item in gas
-      - let destination = `dispatch(\"/gas/update?id=${item._id}\")`
-      div(class="row-sm-2", class="m-1") Item #{item.gas_name}(#{item.smell}) is #{item.weight}
-      button.btn( class="btn-primary ml-1", onclick= destination) Update
-      
- script.
-  function dispatch(path){
-    window.location.href=path
-  }
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  if (toShow == null) 
+    h2 No instance to delete 
+  else 
+    - let gasid = toShow._id 
+    - let gasname = toShow.name
+    - let gassmell = toShow.smell
+    - let gasweight = toShow.weight 
+    - let actionid = "/resource/gas/" + costumeid 
+    script let actionid = "#{actionid}" 
+    div 
+      div.row 
+        div(class='costumeAttr mr-3') gas id is: 
+        div #{gasid} 
+      div.row 
+        div(class='costumeAttr mr-3') gas name is: 
+        div #{gasname} 
+      div.row 
+        div(class='costumeAttr mr-3') gas smell is: 
+        div #{gassmell} 
+      div.row 
+        div(class='costumeAttr mr-3') gas weight is: 
+        div #{gasweight} 
+ 
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete 
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel 
+ 
+  script. 
+    function cancel() { 
+      // Go back to the home page for the costume collection 
+      window.location.href='/costumes' 
+    } 
+  script. 
+    function deleteOnid() { 
+      console.log("starting delete") 
+      // delete first 
+      fetch(actionid, { 
+        method: 'DELETE'      // Dont need a body for the delete 
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Delete succeded") 
+        window.location.href='/costumes' 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Delete failed " + error ) 
+      }); 
+    } 
+ 
